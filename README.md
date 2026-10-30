@@ -1,30 +1,20 @@
-# Talabalarning ilmiy-amaliy konferensiyasi
+# Science Conference 2026
 
-## Loyiha haqida
-Ushbu loyiha talabalarni ilmiy-amaliy konferensiyaga
-onlayn ro'yxatdan o'tkazish va boshqarish uchun yaratilgan.
+Talabalarning ilmiy-amaliy konferensiyasi uchun ro‘yxatdan o‘tish tizimi.
 
-## Imkoniyatlari
-- Google Forms orqali ro'yxatdan o'tish
-- Google Sheets bazasida ma'lumotlarni saqlash
-- Google Apps Script orqali ma'lumotlarni boshqarish
-- HTML va CSS yordamida veb-interfeys
-- 3D ko'rinishda qatnashchilar ro'yxatini namoyish qilish
+## Sayt manzili
+
+[Konferensiya saytini ochish](https://script.google.com/macros/s/AKfycby86xbSnM-SyQnyldofanINd4pI5LOTu5gvT30AWljH4wlld4ZoH6j4RlMMzS_tTO66/exec)
 
 ## Texnologiyalar
-- Google Forms
-- Google Sheets
 - Google Apps Script
+- Google Sheets
 - HTML
 - CSS
 - JavaScript
-- GitHub
 
-## Fayllar
-- Code.gs — Backend
-- Index.html — Frontend
-- README.md — Loyiha tavsifi
-
-## Maqsad
-Konferensiya qatnashchilarini raqamli ro'yxatga olish
-va boshqarish tizimini yaratish.
+## Loyihaning imkoniyatlari
+- Qatnashchilarni ro‘yxatdan o‘tkazish
+- Yo‘nalishlarni tanlash
+- Ma’lumotlarni Google Sheets'ga saqlash
+- Qatnashchilar ro‘yxatini ko‘rish
