@@ -1,0 +1,496 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Science Conference 2026</title>
+
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #080e1e;
+  color: white;
+  min-height: 100vh;
+}
+
+/* HEADER */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 7%;
+  background: #111c35;
+  border-bottom: 1px solid #263858;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: bold;
+  color: #59d5ff;
+}
+
+.live {
+  color: #36e7a2;
+  font-size: 13px;
+}
+
+/* HERO */
+
+.hero {
+  text-align: center;
+  padding: 75px 20px 45px;
+}
+
+.hero h1 {
+  font-size: clamp(30px, 5vw, 52px);
+  background: linear-gradient(90deg,#4edcff,#9d7cff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 18px;
+}
+
+.hero p {
+  color: #aabbd8;
+  font-size: 17px;
+}
+
+/* STATISTICS */
+
+.stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin: 25px;
+}
+
+.stat {
+  width: 190px;
+  padding: 25px;
+  background: linear-gradient(145deg,#1d3154,#111a30);
+  border: 1px solid #30476d;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 15px 35px #0005;
+}
+
+.stat h2 {
+  color: #57d7ff;
+  font-size: 35px;
+  margin-bottom: 8px;
+}
+
+/* SEARCH */
+
+.controls {
+  max-width: 950px;
+  margin: 45px auto 25px;
+  padding: 0 20px;
+  display: flex;
+  gap: 15px;
+}
+
+input, select {
+  flex: 1;
+  padding: 16px;
+  border-radius: 12px;
+  background: #182642;
+  color: white;
+  border: 1px solid #354d72;
+  outline: none;
+  min-width: 0;
+}
+
+input::placeholder {
+  color: #8da2c3;
+}
+
+/* PARTICIPANTS */
+
+.section-title {
+  text-align: center;
+  margin: 40px 0 25px;
+  font-size: 30px;
+}
+
+.participants {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap: 28px;
+  perspective: 1200px;
+}
+
+/* 3D CARD */
+
+.card {
+  background: linear-gradient(145deg,#1b3155,#10192e);
+  border: 1px solid #38547e;
+  border-radius: 23px;
+  padding: 30px 20px;
+  text-align: center;
+  transform-style: preserve-3d;
+  transition: .4s;
+  box-shadow: 0 15px 35px #0006;
+}
+
+.card:hover {
+  transform: rotateY(9deg) rotateX(5deg) translateY(-10px);
+  box-shadow: 0 25px 45px #0009;
+}
+
+.avatar {
+  width: 85px;
+  height: 85px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#43d5ef,#8b5cf6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+  font-weight: bold;
+  box-shadow: 0 0 30px #43d5ef55;
+}
+
+.card h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  overflow-wrap: anywhere;
+}
+
+.card p {
+  font-size: 14px;
+  color: #b6c8e4;
+  margin: 10px 0;
+  overflow-wrap: anywhere;
+}
+
+.direction {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 9px 15px;
+  background: #25466d;
+  color: #70dcff;
+  border-radius: 30px;
+  font-size: 12px;
+}
+
+/* STATUS */
+
+.status {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: #a8bddb;
+}
+
+/* FOOTER */
+
+footer {
+  margin-top: 70px;
+  padding: 35px;
+  text-align: center;
+  background: #111c35;
+  color: #8fa5c7;
+}
+
+/* MOBILE */
+
+@media(max-width:600px) {
+
+  header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .hero {
+    padding-top: 50px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">SCIENCE CONF 2026</div>
+
+  <div class="live">● ONLINE CONFERENCE</div>
+
+</header>
+
+
+<section class="hero">
+
+  <h1>Ilm-fan sari birgalikda!</h1>
+
+  <p>
+    Talabalarning ilmiy-amaliy konferensiyasi
+    qatnashchilari platformasi
+  </p>
+
+</section>
+
+
+<section class="stats">
+
+  <div class="stat">
+    <h2 id="total">0</h2>
+    <p>Jami qatnashchilar</p>
+  </div>
+
+  <div class="stat">
+    <h2 id="directions">0</h2>
+    <p>Yo'nalishlar</p>
+  </div>
+
+</section>
+
+
+<h2 class="section-title">Konferensiya qatnashchilari</h2>
+
+
+<div class="controls">
+
+  <input
+    id="search"
+    type="text"
+    placeholder="Ism va familiyani qidiring..."
+    oninput="filterParticipants()"
+  >
+
+  <select
+    id="directionFilter"
+    onchange="filterParticipants()"
+  >
+    <option value="">Barcha yo'nalishlar</option>
+  </select>
+
+</div>
+
+
+<div class="participants" id="participants">
+
+  <p class="status">Ma'lumotlar yuklanmoqda...</p>
+
+</div>
+
+
+<footer>
+
+  © 2026 SCIENCE CONF
+  <br><br>
+  Talabalarning ilmiy-amaliy konferensiyasi
+
+</footer>
+
+
+<script>
+
+let allParticipants = [];
+
+
+// QATNASHCHILARNI YUKLASH
+
+function loadParticipants() {
+
+  google.script.run
+
+    .withSuccessHandler(function(data) {
+
+      allParticipants = data || [];
+
+      document.getElementById("total").textContent =
+        allParticipants.length;
+
+      const directions = [
+        ...new Set(
+          allParticipants
+            .map(p => p.direction)
+            .filter(Boolean)
+        )
+      ];
+
+      document.getElementById("directions").textContent =
+        directions.length;
+
+      loadDirections(directions);
+
+      displayParticipants(allParticipants);
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      document.getElementById("participants").innerHTML =
+        '<p class="status">Xatolik: ' +
+        escapeHTML(error.message) +
+        '</p>';
+
+    })
+
+    .getParticipants();
+
+}
+
+
+// YO'NALISHLAR
+
+function loadDirections(directions) {
+
+  const select = document.getElementById("directionFilter");
+
+  select.innerHTML =
+    '<option value="">Barcha yo\'nalishlar</option>';
+
+  directions.forEach(function(direction) {
+
+    const option = document.createElement("option");
+
+    option.value = direction;
+    option.textContent = direction;
+
+    select.appendChild(option);
+
+  });
+
+}
+
+
+// HTML XAVFSIZLIGI
+
+function escapeHTML(value) {
+
+  return String(value).replace(/[&<>"']/g, function(char) {
+
+    return {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char];
+
+  });
+
+}
+
+
+// QATNASHCHILARNI KO'RSATISH
+
+function displayParticipants(data) {
+
+  const container =
+    document.getElementById("participants");
+
+  container.innerHTML = "";
+
+  if (!data.length) {
+
+    container.innerHTML =
+      '<p class="status">Qatnashchilar topilmadi.</p>';
+
+    return;
+
+  }
+
+  data.forEach(function(person) {
+
+    const name = person.name || "Noma'lum";
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = name.trim().charAt(0).toUpperCase();
+
+    const title = document.createElement("h3");
+    title.textContent = name;
+
+    const group = document.createElement("p");
+    group.textContent =
+      "Guruh: " + (person.group || "Ko'rsatilmagan");
+
+    const topic = document.createElement("p");
+    topic.textContent =
+      "Mavzu: " + (person.topic || "Ko'rsatilmagan");
+
+    const direction = document.createElement("span");
+    direction.className = "direction";
+    direction.textContent =
+      person.direction || "Yo'nalish ko'rsatilmagan";
+
+    card.append(
+      avatar,
+      title,
+      group,
+      topic,
+      direction
+    );
+
+    container.appendChild(card);
+
+  });
+
+}
+
+
+// QIDIRUV VA FILTRLASH
+
+function filterParticipants() {
+
+  const search =
+    document.getElementById("search")
+      .value.toLowerCase().trim();
+
+  const direction =
+    document.getElementById("directionFilter").value;
+
+  const filtered = allParticipants.filter(function(person) {
+
+    const name = (person.name || "").toLowerCase();
+
+    const matchesName = name.includes(search);
+
+    const matchesDirection =
+      !direction || person.direction === direction;
+
+    return matchesName && matchesDirection;
+
+  });
+
+  displayParticipants(filtered);
+
+}
+
+
+// SAHIFA OCHILGANDA
+
+window.addEventListener("load", loadParticipants);
+
+</script>
+
+</body>
+</html>
