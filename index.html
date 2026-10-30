@@ -4,11 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Science Conference 2026</title>
 
 <style>
-
 * {
   margin: 0;
   padding: 0;
@@ -21,8 +19,6 @@ body {
   color: white;
   min-height: 100vh;
 }
-
-/* HEADER */
 
 header {
   display: flex;
@@ -44,8 +40,6 @@ header {
   font-size: 13px;
 }
 
-/* HERO */
-
 .hero {
   text-align: center;
   padding: 75px 20px 45px;
@@ -64,8 +58,6 @@ header {
   color: #aabbd8;
   font-size: 17px;
 }
-
-/* STATISTICS */
 
 .stats {
   display: flex;
@@ -91,8 +83,6 @@ header {
   margin-bottom: 8px;
 }
 
-/* SEARCH */
-
 .controls {
   max-width: 950px;
   margin: 45px auto 25px;
@@ -116,8 +106,6 @@ input::placeholder {
   color: #8da2c3;
 }
 
-/* PARTICIPANTS */
-
 .section-title {
   text-align: center;
   margin: 40px 0 25px;
@@ -133,8 +121,6 @@ input::placeholder {
   gap: 28px;
   perspective: 1200px;
 }
-
-/* 3D CARD */
 
 .card {
   background: linear-gradient(145deg,#1b3155,#10192e);
@@ -189,16 +175,12 @@ input::placeholder {
   font-size: 12px;
 }
 
-/* STATUS */
-
 .status {
   grid-column: 1 / -1;
   text-align: center;
   padding: 40px;
   color: #a8bddb;
 }
-
-/* FOOTER */
 
 footer {
   margin-top: 70px;
@@ -208,10 +190,7 @@ footer {
   color: #8fa5c7;
 }
 
-/* MOBILE */
-
 @media(max-width:600px) {
-
   header {
     flex-direction: column;
     gap: 12px;
@@ -224,37 +203,26 @@ footer {
   .hero {
     padding-top: 50px;
   }
-
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-
   <div class="logo">SCIENCE CONF 2026</div>
-
   <div class="live">● ONLINE CONFERENCE</div>
-
 </header>
 
-
 <section class="hero">
-
   <h1>Ilm-fan sari birgalikda!</h1>
-
   <p>
     Talabalarning ilmiy-amaliy konferensiyasi
     qatnashchilari platformasi
   </p>
-
 </section>
 
-
 <section class="stats">
-
   <div class="stat">
     <h2 id="total">0</h2>
     <p>Jami qatnashchilar</p>
@@ -264,15 +232,11 @@ footer {
     <h2 id="directions">0</h2>
     <p>Yo'nalishlar</p>
   </div>
-
 </section>
-
 
 <h2 class="section-title">Konferensiya qatnashchilari</h2>
 
-
 <div class="controls">
-
   <input
     id="search"
     type="text"
@@ -286,104 +250,105 @@ footer {
   >
     <option value="">Barcha yo'nalishlar</option>
   </select>
-
 </div>
-
 
 <div class="participants" id="participants">
-
   <p class="status">Ma'lumotlar yuklanmoqda...</p>
-
 </div>
 
-
 <footer>
-
   © 2026 SCIENCE CONF
   <br><br>
   Talabalarning ilmiy-amaliy konferensiyasi
-
 </footer>
-
 
 <script>
 
+// GOOGLE APPS SCRIPT HAVOLASI
+const API_URL = "https://script.google.com/macros/s/AKfycbyaV9WiKemVf1BxYTdA59tw89VaPL5kPuZkA8kzTXegs9NhxHkOCfxNls5C8pcBY20/exec";
+
 let allParticipants = [];
 
-
 // QATNASHCHILARNI YUKLASH
-
 function loadParticipants() {
+  const container = document.getElementById("participants");
 
-  google.script.run
+  container.innerHTML =
+    '<p class="status">Ma\'lumotlar yuklanmoqda...</p>';
 
-    .withSuccessHandler(function(data) {
+  // Oldingi so'rov skriptini olib tashlash
+  const oldScript = document.getElementById("apiScript");
+  if (oldScript) oldScript.remove();
 
-      allParticipants = data || [];
+  // JSONP javobini qabul qilish
+  window.conferenceCallback = function(data) {
 
-      document.getElementById("total").textContent =
-        allParticipants.length;
-
-      const directions = [
-        ...new Set(
-          allParticipants
-            .map(p => p.direction)
-            .filter(Boolean)
-        )
-      ];
-
-      document.getElementById("directions").textContent =
-        directions.length;
-
-      loadDirections(directions);
-
-      displayParticipants(allParticipants);
-
-    })
-
-    .withFailureHandler(function(error) {
-
-      document.getElementById("participants").innerHTML =
+    if (data && data.error) {
+      container.innerHTML =
         '<p class="status">Xatolik: ' +
-        escapeHTML(error.message) +
+        escapeHTML(data.error) +
         '</p>';
+      return;
+    }
 
-    })
+    if (!Array.isArray(data)) {
+      container.innerHTML =
+        '<p class="status">API noto‘g‘ri ma’lumot qaytardi.</p>';
+      return;
+    }
 
-    .getParticipants();
+    allParticipants = data;
 
+    document.getElementById("total").textContent =
+      allParticipants.length;
+
+    const directions = [
+      ...new Set(
+        allParticipants
+          .map(p => p.direction)
+          .filter(Boolean)
+      )
+    ];
+
+    document.getElementById("directions").textContent =
+      directions.length;
+
+    loadDirections(directions);
+    displayParticipants(allParticipants);
+  };
+
+  const script = document.createElement("script");
+  script.id = "apiScript";
+
+  script.src =
+    API_URL + "?callback=conferenceCallback&_=" + Date.now();
+
+  script.onerror = function() {
+    container.innerHTML =
+      '<p class="status">API bilan bog‘lanib bo‘lmadi. Apps Script havolasi va JSONP sozlamalarini tekshiring.</p>';
+  };
+
+  document.body.appendChild(script);
 }
 
-
 // YO'NALISHLAR
-
 function loadDirections(directions) {
-
   const select = document.getElementById("directionFilter");
 
   select.innerHTML =
     '<option value="">Barcha yo\'nalishlar</option>';
 
   directions.forEach(function(direction) {
-
     const option = document.createElement("option");
-
     option.value = direction;
     option.textContent = direction;
-
     select.appendChild(option);
-
   });
-
 }
 
-
 // HTML XAVFSIZLIGI
-
 function escapeHTML(value) {
-
   return String(value).replace(/[&<>"']/g, function(char) {
-
     return {
       '&': '&amp;',
       '<': '&lt;',
@@ -391,32 +356,21 @@ function escapeHTML(value) {
       '"': '&quot;',
       "'": '&#39;'
     }[char];
-
   });
-
 }
 
-
 // QATNASHCHILARNI KO'RSATISH
-
 function displayParticipants(data) {
-
-  const container =
-    document.getElementById("participants");
-
+  const container = document.getElementById("participants");
   container.innerHTML = "";
 
   if (!data.length) {
-
     container.innerHTML =
       '<p class="status">Qatnashchilar topilmadi.</p>';
-
     return;
-
   }
 
   data.forEach(function(person) {
-
     const name = person.name || "Noma'lum";
 
     const card = document.createElement("div");
@@ -451,25 +405,18 @@ function displayParticipants(data) {
     );
 
     container.appendChild(card);
-
   });
-
 }
 
-
 // QIDIRUV VA FILTRLASH
-
 function filterParticipants() {
-
-  const search =
-    document.getElementById("search")
-      .value.toLowerCase().trim();
+  const search = document.getElementById("search")
+    .value.toLowerCase().trim();
 
   const direction =
     document.getElementById("directionFilter").value;
 
   const filtered = allParticipants.filter(function(person) {
-
     const name = (person.name || "").toLowerCase();
 
     const matchesName = name.includes(search);
@@ -478,16 +425,12 @@ function filterParticipants() {
       !direction || person.direction === direction;
 
     return matchesName && matchesDirection;
-
   });
 
   displayParticipants(filtered);
-
 }
 
-
 // SAHIFA OCHILGANDA
-
 window.addEventListener("load", loadParticipants);
 
 </script>
