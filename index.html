@@ -42,7 +42,7 @@ header {
 
 .hero {
   text-align: center;
-  padding: 75px 20px 45px;
+  padding: 65px 20px 35px;
 }
 
 .hero h1 {
@@ -83,33 +83,94 @@ header {
   margin-bottom: 8px;
 }
 
-.controls {
-  max-width: 950px;
-  margin: 45px auto 25px;
-  padding: 0 20px;
+.section-title {
+  text-align: center;
+  margin: 45px 0 25px;
+  font-size: 28px;
+}
+
+.form-box {
+  max-width: 850px;
+  margin: 25px auto;
+  padding: 30px;
+  background: linear-gradient(145deg,#1b3155,#10192e);
+  border: 1px solid #38547e;
+  border-radius: 23px;
+  box-shadow: 0 15px 35px #0006;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field {
   display: flex;
-  gap: 15px;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+label {
+  color: #b6c8e4;
+  font-size: 14px;
 }
 
 input, select {
-  flex: 1;
-  padding: 16px;
+  width: 100%;
+  padding: 15px;
   border-radius: 12px;
   background: #182642;
   color: white;
   border: 1px solid #354d72;
   outline: none;
-  min-width: 0;
+  font-size: 15px;
 }
 
 input::placeholder {
   color: #8da2c3;
 }
 
-.section-title {
+select option {
+  background: #182642;
+  color: white;
+}
+
+.submit-btn {
+  width: 100%;
+  margin-top: 22px;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg,#43d5ef,#8b5cf6);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.submit-btn:disabled {
+  opacity: .5;
+  cursor: wait;
+}
+
+.message {
+  margin-top: 15px;
   text-align: center;
-  margin: 40px 0 25px;
-  font-size: 30px;
+  font-size: 14px;
+  color: #36e7a2;
+}
+
+.controls {
+  max-width: 950px;
+  margin: 25px auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 15px;
 }
 
 .participants {
@@ -128,14 +189,13 @@ input::placeholder {
   border-radius: 23px;
   padding: 30px 20px;
   text-align: center;
-  transform-style: preserve-3d;
   transition: .4s;
   box-shadow: 0 15px 35px #0006;
+  overflow-wrap: anywhere;
 }
 
 .card:hover {
-  transform: rotateY(9deg) rotateX(5deg) translateY(-10px);
-  box-shadow: 0 25px 45px #0009;
+  transform: rotateY(7deg) rotateX(4deg) translateY(-8px);
 }
 
 .avatar {
@@ -149,20 +209,17 @@ input::placeholder {
   align-items: center;
   font-size: 35px;
   font-weight: bold;
-  box-shadow: 0 0 30px #43d5ef55;
 }
 
 .card h3 {
   font-size: 20px;
   margin-bottom: 15px;
-  overflow-wrap: anywhere;
 }
 
 .card p {
   font-size: 14px;
   color: #b6c8e4;
   margin: 10px 0;
-  overflow-wrap: anywhere;
 }
 
 .direction {
@@ -178,7 +235,7 @@ input::placeholder {
 .status {
   grid-column: 1 / -1;
   text-align: center;
-  padding: 40px;
+  padding: 35px;
   color: #a8bddb;
 }
 
@@ -200,8 +257,17 @@ footer {
     flex-direction: column;
   }
 
-  .hero {
-    padding-top: 50px;
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .field.full {
+    grid-column: auto;
+  }
+
+  .form-box {
+    margin: 20px;
+    padding: 20px;
   }
 }
 </style>
@@ -216,10 +282,7 @@ footer {
 
 <section class="hero">
   <h1>Ilm-fan sari birgalikda!</h1>
-  <p>
-    Talabalarning ilmiy-amaliy konferensiyasi
-    qatnashchilari platformasi
-  </p>
+  <p>Talabalarning ilmiy-amaliy konferensiyasi qatnashchilari platformasi</p>
 </section>
 
 <section class="stats">
@@ -227,12 +290,66 @@ footer {
     <h2 id="total">0</h2>
     <p>Jami qatnashchilar</p>
   </div>
-
   <div class="stat">
-    <h2 id="directions">0</h2>
+    <h2 id="directionsCount">0</h2>
     <p>Yo'nalishlar</p>
   </div>
 </section>
+
+<h2 class="section-title">Konferensiyaga ro'yxatdan o'tish</h2>
+
+<div class="form-box">
+  <form id="registrationForm">
+
+    <div class="form-grid">
+
+      <div class="field full">
+        <label for="name">F.I.Sh.</label>
+        <input id="name" name="name" type="text"
+          placeholder="Ism va familiyangiz" required>
+      </div>
+
+      <div class="field">
+        <label for="group">O'quv kursi / Guruh</label>
+        <input id="group" name="group" type="text"
+          placeholder="Masalan: 2-kurs, DI-21" required>
+      </div>
+
+      <div class="field">
+        <label for="direction">Yo'nalishi</label>
+        <select id="direction" name="direction" required>
+          <option value="">Yo'nalishni tanlang</option>
+        </select>
+      </div>
+
+      <div class="field full">
+        <label for="topic">Ma'ruza mavzusi</label>
+        <input id="topic" name="topic" type="text"
+          placeholder="Maqolangiz mavzusi" required>
+      </div>
+
+      <div class="field">
+        <label for="email">E-pochta</label>
+        <input id="email" name="email" type="email"
+          placeholder="example@gmail.com" required>
+      </div>
+
+      <div class="field">
+        <label for="phone">Telefon raqami</label>
+        <input id="phone" name="phone" type="tel"
+          placeholder="+998901234567" required>
+      </div>
+
+    </div>
+
+    <button class="submit-btn" id="submitBtn" type="submit">
+      Ro'yxatdan o'tish
+    </button>
+
+    <div class="message" id="formMessage"></div>
+
+  </form>
+</div>
 
 <h2 class="section-title">Konferensiya qatnashchilari</h2>
 
@@ -244,10 +361,8 @@ footer {
     oninput="filterParticipants()"
   >
 
-  <select
-    id="directionFilter"
-    onchange="filterParticipants()"
-  >
+  <select id="directionFilter"
+    onchange="filterParticipants()">
     <option value="">Barcha yo'nalishlar</option>
   </select>
 </div>
@@ -264,100 +379,102 @@ footer {
 
 <script>
 
-// GOOGLE APPS SCRIPT HAVOLASI
-const API_URL = "https://script.google.com/macros/s/AKfycbyaV9WiKemVf1BxYTdA59tw89VaPL5kPuZkA8kzTXegs9NhxHkOCfxNls5C8pcBY20/exec";
-
 let allParticipants = [];
 
-// QATNASHCHILARNI YUKLASH
+// YO'NALISHLARNI OLISH
+function loadDirections() {
+  google.script.run
+    .withSuccessHandler(function(directions) {
+      const formSelect = document.getElementById("direction");
+      const filterSelect = document.getElementById("directionFilter");
+
+      formSelect.innerHTML =
+        '<option value="">Yo\'nalishni tanlang</option>';
+
+      filterSelect.innerHTML =
+        '<option value="">Barcha yo\'nalishlar</option>';
+
+      directions.forEach(function(direction) {
+        const option1 = document.createElement("option");
+        option1.value = direction;
+        option1.textContent = direction;
+        formSelect.appendChild(option1);
+
+        const option2 = document.createElement("option");
+        option2.value = direction;
+        option2.textContent = direction;
+        filterSelect.appendChild(option2);
+      });
+
+      document.getElementById("directionsCount").textContent =
+        directions.length;
+    })
+    .withFailureHandler(showError)
+    .getDirections();
+}
+
+// QATNASHCHILARNI OLISH
 function loadParticipants() {
   const container = document.getElementById("participants");
-
   container.innerHTML =
     '<p class="status">Ma\'lumotlar yuklanmoqda...</p>';
 
-  // Oldingi so'rov skriptini olib tashlash
-  const oldScript = document.getElementById("apiScript");
-  if (oldScript) oldScript.remove();
+  google.script.run
+    .withSuccessHandler(function(data) {
+      allParticipants = Array.isArray(data) ? data : [];
 
-  // JSONP javobini qabul qilish
-  window.conferenceCallback = function(data) {
+      document.getElementById("total").textContent =
+        allParticipants.length;
 
-    if (data && data.error) {
-      container.innerHTML =
-        '<p class="status">Xatolik: ' +
-        escapeHTML(data.error) +
-        '</p>';
-      return;
-    }
-
-    if (!Array.isArray(data)) {
-      container.innerHTML =
-        '<p class="status">API noto‘g‘ri ma’lumot qaytardi.</p>';
-      return;
-    }
-
-    allParticipants = data;
-
-    document.getElementById("total").textContent =
-      allParticipants.length;
-
-    const directions = [
-      ...new Set(
-        allParticipants
-          .map(p => p.direction)
-          .filter(Boolean)
-      )
-    ];
-
-    document.getElementById("directions").textContent =
-      directions.length;
-
-    loadDirections(directions);
-    displayParticipants(allParticipants);
-  };
-
-  const script = document.createElement("script");
-  script.id = "apiScript";
-
-  script.src =
-    API_URL + "?callback=conferenceCallback&_=" + Date.now();
-
-  script.onerror = function() {
-    container.innerHTML =
-      '<p class="status">API bilan bog‘lanib bo‘lmadi. Apps Script havolasi va JSONP sozlamalarini tekshiring.</p>';
-  };
-
-  document.body.appendChild(script);
+      displayParticipants(allParticipants);
+    })
+    .withFailureHandler(showError)
+    .getParticipants();
 }
 
-// YO'NALISHLAR
-function loadDirections(directions) {
-  const select = document.getElementById("directionFilter");
+// YANGI QATNASHCHINI YUBORISH
+document.getElementById("registrationForm")
+  .addEventListener("submit", function(event) {
 
-  select.innerHTML =
-    '<option value="">Barcha yo\'nalishlar</option>';
+    event.preventDefault();
 
-  directions.forEach(function(direction) {
-    const option = document.createElement("option");
-    option.value = direction;
-    option.textContent = direction;
-    select.appendChild(option);
+    const button = document.getElementById("submitBtn");
+    const message = document.getElementById("formMessage");
+
+    const data = {
+      name: document.getElementById("name").value.trim(),
+      group: document.getElementById("group").value.trim(),
+      topic: document.getElementById("topic").value.trim(),
+      direction: document.getElementById("direction").value,
+      email: document.getElementById("email").value.trim(),
+      phone: document.getElementById("phone").value.trim()
+    };
+
+    button.disabled = true;
+    button.textContent = "Yuborilmoqda...";
+    message.textContent = "";
+
+    google.script.run
+      .withSuccessHandler(function(result) {
+        message.textContent = result;
+        document.getElementById("registrationForm").reset();
+
+        loadParticipants();
+
+        button.disabled = false;
+        button.textContent = "Ro'yxatdan o'tish";
+      })
+      .withFailureHandler(function(error) {
+        message.textContent =
+          "Xatolik: " + (error.message || error);
+
+        message.style.color = "#ff7777";
+
+        button.disabled = false;
+        button.textContent = "Ro'yxatdan o'tish";
+      })
+      .addParticipant(data);
   });
-}
-
-// HTML XAVFSIZLIGI
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, function(char) {
-    return {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#39;'
-    }[char];
-  });
-}
 
 // QATNASHCHILARNI KO'RSATISH
 function displayParticipants(data) {
@@ -366,7 +483,7 @@ function displayParticipants(data) {
 
   if (!data.length) {
     container.innerHTML =
-      '<p class="status">Qatnashchilar topilmadi.</p>';
+      '<p class="status">Hozircha qatnashchilar mavjud emas.</p>';
     return;
   }
 
@@ -384,12 +501,20 @@ function displayParticipants(data) {
     title.textContent = name;
 
     const group = document.createElement("p");
-    group.textContent =
-      "Guruh: " + (person.group || "Ko'rsatilmagan");
+    group.textContent = "Guruh: " +
+      (person.group || "Ko'rsatilmagan");
 
     const topic = document.createElement("p");
-    topic.textContent =
-      "Mavzu: " + (person.topic || "Ko'rsatilmagan");
+    topic.textContent = "Mavzu: " +
+      (person.topic || "Ko'rsatilmagan");
+
+    const email = document.createElement("p");
+    email.textContent = "E-pochta: " +
+      (person.email || "Ko'rsatilmagan");
+
+    const phone = document.createElement("p");
+    phone.textContent = "Telefon: " +
+      (person.phone || "Ko'rsatilmagan");
 
     const direction = document.createElement("span");
     direction.className = "direction";
@@ -397,11 +522,7 @@ function displayParticipants(data) {
       person.direction || "Yo'nalish ko'rsatilmagan";
 
     card.append(
-      avatar,
-      title,
-      group,
-      topic,
-      direction
+      avatar, title, group, topic, email, phone, direction
     );
 
     container.appendChild(card);
@@ -419,19 +540,26 @@ function filterParticipants() {
   const filtered = allParticipants.filter(function(person) {
     const name = (person.name || "").toLowerCase();
 
-    const matchesName = name.includes(search);
-
-    const matchesDirection =
-      !direction || person.direction === direction;
-
-    return matchesName && matchesDirection;
+    return name.includes(search) &&
+      (!direction || person.direction === direction);
   });
 
   displayParticipants(filtered);
 }
 
+// XATOLIKNI KO'RSATISH
+function showError(error) {
+  document.getElementById("participants").innerHTML =
+    '<p class="status">Xatolik: ' +
+    (error.message || error) +
+    '</p>';
+}
+
 // SAHIFA OCHILGANDA
-window.addEventListener("load", loadParticipants);
+window.addEventListener("load", function() {
+  loadDirections();
+  loadParticipants();
+});
 
 </script>
 
